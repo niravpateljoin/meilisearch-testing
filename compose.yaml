@@ -1,0 +1,27 @@
+
+services:
+
+###> meilisearch/search-bundle ###
+  meilisearch:
+    image: getmeili/meilisearch:v1.14
+    container_name: meilisearch
+    env_file:
+      - .env
+      - .env.local
+    ports:
+      - "${MEILISEARCH_LISTEN_IP}:${MEILISEARCH_LISTEN_PORT}:7700"
+    environment:
+      MEILI_MASTER_KEY: ${MEILISEARCH_API_KEY}
+    volumes:
+      - meilisearch_data:/meili_data
+    restart: unless-stopped
+###< meilisearch/search-bundle ###
+
+volumes:
+###> doctrine/doctrine-bundle ###
+  database_data:
+###< doctrine/doctrine-bundle ###
+
+###> meilisearch/search-bundle ###
+  meilisearch_data:
+###< meilisearch/search-bundle ###
