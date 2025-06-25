@@ -11,7 +11,6 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $manager->getConnection()->getConfiguration()->setSQLLogger(null);
         $faker = Factory::create();
 
         $batchSize = 1000;

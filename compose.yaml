@@ -7,7 +7,6 @@ services:
     container_name: meilisearch
     env_file:
       - .env
-      - .env.local
     ports:
       - "${MEILISEARCH_LISTEN_IP}:${MEILISEARCH_LISTEN_PORT}:7700"
     environment:
@@ -16,6 +15,20 @@ services:
       - meilisearch_data:/meili_data
     restart: unless-stopped
 ###< meilisearch/search-bundle ###
+
+  database:
+    image: mariadb:10.11
+    container_name: mariadb
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3308:3306"
 
 volumes:
 ###> doctrine/doctrine-bundle ###
