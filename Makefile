@@ -1,9 +1,9 @@
 # Initialize the project
-init: composer-install up wait-db migrate run-fixture
+init: composer-install up wait-db post-install-scripts migrate run-fixture
 
 # Bring up containers
 composer-install:
-	@composer install
+	@composer install --no-scripts
 
 up:
 	@composer docker-compose-up
@@ -14,6 +14,8 @@ wait-db:
 	@echo "✅ MySQL is up — sleeping 3s for init..."
 	@sleep 3
 
+post-install-scripts:
+	@composer run-script auto-scripts
 # Run migrations
 migrate:
 	@composer migrate-migration
