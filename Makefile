@@ -7,7 +7,7 @@ up:
 
 wait-db:
 	@echo "⏳ Waiting for database on 127.0.0.1:3308..."
-	@until mysqladmin ping -h 127.0.0.1 -P 3308 --user=$(DB_USER) --password=$(DB_PASSWORD) --silent; do sleep 1; done
+	@until docker compose exec database mysqladmin ping -h 127.0.0.1 -P 3306 --user=$(DB_USER) --password=$(DB_PASSWORD) --silent; do sleep 1; done
 	@echo "✅ MySQL is up — sleeping 3s for init..."
 	@sleep 3
 
