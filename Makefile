@@ -1,7 +1,10 @@
 # Initialize the project
-init: up wait-db migrate run-fixture
+init: composer-install up wait-db migrate run-fixture
 
 # Bring up containers
+composer-install:
+	@composer install
+
 up:
 	@composer docker-compose-up
 
