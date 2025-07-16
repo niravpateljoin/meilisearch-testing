@@ -1,7 +1,18 @@
-
 services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - database
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
-###> meilisearch/search-bundle ###
   meilisearch:
     image: getmeili/meilisearch:v1.14
     container_name: meilisearch
@@ -14,7 +25,6 @@ services:
     volumes:
       - meilisearch_data:/meili_data
     restart: unless-stopped
-###< meilisearch/search-bundle ###
 
   database:
     image: mariadb:10.11
@@ -31,10 +41,5 @@ services:
       - "3308:3306"
 
 volumes:
-###> doctrine/doctrine-bundle ###
   database_data:
-###< doctrine/doctrine-bundle ###
-
-###> meilisearch/search-bundle ###
   meilisearch_data:
-###< meilisearch/search-bundle ###

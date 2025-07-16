@@ -61,7 +61,7 @@ That will:
 Once the data is loaded into your database, you can import into Meilisearch:
 
 ```bash
-php -d memory_limit=1G bin/console meilisearch:import --no-debug
+make meili-import
 ```
 
 ### 🧰 Tear down containers
