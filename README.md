@@ -26,18 +26,6 @@ git clone https://github.com/niravpateljoin/meilisearch-testing.git
 cd meilisearch-testing
 ```
 
-### 2️⃣ Configure your environment
-
-Copy and update the `.env.local` file with your database credentials and other config:
-
-```
-DATABASE_URL="mysql://meilisearch_user:secretpassword@127.0.0.1:3308/meilisearch_testing?charset=utf8mb4"
-DB_USER=meilisearch_user
-DB_PASSWORD=secretpassword
-```
-
----
-
 ## 🎯 Usage
 
 ### 🧰 Initialize the entire setup

@@ -9,9 +9,24 @@ services:
     volumes:
       - ./:/var/www/html
     depends_on:
-      - database
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - mariadb
+      - meilisearch
+    networks:
+      - app-network
+
+  mariadb:
+    image: mariadb:10.11
+    container_name: mariadb
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - app-network
 
   meilisearch:
     image: getmeili/meilisearch:v1.14
@@ -25,21 +40,12 @@ services:
     volumes:
       - meilisearch_data:/meili_data
     restart: unless-stopped
+    networks:
+      - app-network
 
-  database:
-    image: mariadb:10.11
-    container_name: mariadb
-    restart: unless-stopped
-    env_file:
-      - .env
-    environment:
-      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MARIADB_DATABASE: ${DB_NAME}
-      MARIADB_USER: ${DB_USER}
-      MARIADB_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - "3308:3306"
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
-  database_data:
   meilisearch_data:
